@@ -57,7 +57,7 @@ export default function PanelBody<DateType>({
   for (let i = 0; i < rowNum; i += 1) {
     const row: React.ReactNode[] = [];
     let rowStartDate: DateType;
-
+    let isRowInView = false;
     for (let j = 0; j < colNum; j += 1) {
       const offset = i * colNum + j;
       const currentDate = getCellDate(baseDate, offset);
@@ -77,7 +77,8 @@ export default function PanelBody<DateType>({
       }
 
       const title = titleCell && titleCell(currentDate);
-
+      const cellClassName = getCellClassName(currentDate);
+      isRowInView = isRowInView || cellClassName[`${cellPrefixCls}-in-view`];
       row.push(
         <td
           key={j}
@@ -89,7 +90,7 @@ export default function PanelBody<DateType>({
             [`${cellPrefixCls}-end`]:
               title === getLastDay(generateConfig, currentDate) ||
               (picker === 'year' && Number(title) % 10 === 9),
-            ...getCellClassName(currentDate),
+            ...cellClassName,
           })}
           onClick={() => {
             if (!disabled) {
@@ -115,9 +116,14 @@ export default function PanelBody<DateType>({
         </td>,
       );
     }
-
     rows.push(
-      <tr key={i} className={rowClassName && rowClassName(rowStartDate!)}>
+      <tr
+        key={i}
+        className={
+          (isRowInView ? `${prefixCls}-row-in-view ` : '') +
+          (rowClassName ? rowClassName(rowStartDate!) : '')
+        }
+      >
         {row}
       </tr>,
     );
