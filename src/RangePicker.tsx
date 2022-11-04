@@ -119,6 +119,8 @@ export type RangePickerSharedProps<DateType> = {
   inline?: boolean;
   /** just display one panel **/
   showOnePanel?: boolean;
+  /** disable auto trigger next field */
+  disableAutoFocus?: boolean;
 };
 
 type OmitPickerProps<Props> = Omit<
@@ -231,6 +233,7 @@ function InnerRangePicker<DateType>(props: RangePickerProps<DateType>) {
     autoComplete = 'off',
     inline,
     showOnePanel,
+    disableAutoFocus,
   } = props as MergedRangePickerProps<DateType>;
 
   const needConfirmButton: boolean = (picker === 'date' && !!showTime) || picker === 'time';
@@ -496,8 +499,10 @@ function InnerRangePicker<DateType>(props: RangePickerProps<DateType>) {
       (!openRecordsRef.current[nextOpenIndex] || !getValue(values, nextOpenIndex)) &&
       getValue(values, sourceIndex)
     ) {
-      // Delay to focus to avoid input blur trigger expired selectedValues
-      triggerOpenAndFocus(nextOpenIndex);
+      if (!disableAutoFocus) {
+        // Delay to focus to avoid input blur trigger expired selectedValues
+        triggerOpenAndFocus(nextOpenIndex);
+      }
     } else {
       triggerOpen(false, sourceIndex);
     }

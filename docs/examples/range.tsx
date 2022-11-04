@@ -150,6 +150,8 @@ export default () => {
             renderExtraFooter={() => {
               return <span>hello</span>;
             }}
+            allowClear
+            disableAutoFocus
           />
         </div>
 
