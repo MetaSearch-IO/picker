@@ -1027,8 +1027,8 @@ function InnerRangePicker<DateType>(props: RangePickerProps<DateType>) {
   const rangePanel = (
     <div
       className={classNames(`${prefixCls}-range-wrapper`, `${prefixCls}-${picker}-range-wrapper`, {
-        [`${prefixCls}-start-input-focused`]: startFocused,
-        [`${prefixCls}-end-input-focused`]: endFocused,
+        [`${prefixCls}-start-input-focused`]: mergedActivePickerIndex === 0,
+        [`${prefixCls}-end-input-focused`]: mergedActivePickerIndex === 1,
       })}
       style={{ minWidth: popupMinWidth }}
     >
