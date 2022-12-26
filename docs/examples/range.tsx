@@ -151,7 +151,7 @@ export default () => {
               return <span>hello</span>;
             }}
             allowClear
-            disableAutoFocus
+            disableAutoFocusFromEndToStart
           />
         </div>
 
